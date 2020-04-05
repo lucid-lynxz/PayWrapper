@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
+import org.lynxz.wechatpaywrapper.WechatPayManager
 import org.lynxz.wechatpaywrapper.util.LoggerUtil
 import org.lynxz.wechatpaywrapper.util.WechatUtil
 
@@ -29,17 +30,15 @@ open class WXPayTemplateActivity : Activity(), IWXAPIEventHandler {
     }
 
     override fun onResp(baseResp: BaseResp?) {
-        // errCode 0-成功 -1-错误(签名错误、未注册APPID等) -2-用户取消
+        WechatPayManager.setPayResp(baseResp)
+
+        // errCode 0-成功 -1-错误(签名错误、未注册APPID等) 2-用户取消
         LoggerUtil.w(
             TAG,
             "onResp: type=${baseResp?.type}, errCode=${baseResp?.errCode},errStr=${baseResp?.errStr}"
         )
 
-
-//        when (baseResp?.type) {
-//            ConstantsAPI.COMMAND_PAY_BY_WX -> {
-//            }
-//        }
+        finish()
     }
 
     override fun onReq(baseReq: BaseReq?) {

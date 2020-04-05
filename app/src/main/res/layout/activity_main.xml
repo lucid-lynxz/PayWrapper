@@ -10,13 +10,19 @@
         android:id="@+id/btn_init"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="初始化微信自支付" />
+        android:text="初始化微信+支付宝支付" />
 
     <Button
-        android:id="@+id/btn_pay"
+        android:id="@+id/btn_pay_by_wx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="微信支付" />
+
+    <Button
+        android:id="@+id/btn_pay_by_alipay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="支付宝支付" />
 
 
     <TextView

@@ -24,11 +24,26 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // 注意: 鉴于在 module 中又依赖 aar 文件会导致集成配置步骤变多
+    // 因此本module直接解压sdk aar文件, 将相关资源拷贝到对应位置
+    // 原始aar文件放在目录 alipaywrapper/oriAar/ 下
+    // todo 2020.4.5 后续编写gradle脚本自动解压分配,避免人工操作
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
     testImplementation(test.junit)
     androidTestImplementation(test.espresso)
     androidTestImplementation(test.testRunner)
 
+    // 需要kotlin支持
     compileOnly(libs.kotlinLib)
+
+    // 基础库
+    implementation project(path: ":basepaywrapper")
 }
