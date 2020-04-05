@@ -82,6 +82,7 @@ class AliPayTemplateActivity : Activity() {
         intent?.getBooleanExtra(KEY_CLOSE_ACTIVITY, false)?.let {
             if (it) {
                 finish()
+                overridePendingTransition(0, 0)
                 return
             }
         }

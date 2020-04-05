@@ -11,7 +11,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
 
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -41,6 +41,7 @@ dependencies {
     // 因此本module直接解压sdk aar文件, 将相关资源拷贝到对应位置
     // 原始aar文件放在目录 alipaywrapper/oriAar/ 下
     // todo 2020.4.5 后续编写gradle脚本自动解压分配,避免人工操作
+    // tood 2020.4.5 注意: 提取aar中的 manifest.xml 后, 需要对包名,最低版本号等数据进行处理
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     testImplementation(test.junit)
@@ -51,11 +52,11 @@ dependencies {
     compileOnly(libs.kotlinLib)
 
     // 基础库
-    if (useMavenVersion) {
-        compileOnly 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
-    } else {
-        compileOnly project(path: ":basepaywrapper")
-    }
+//    if (useMavenVersion) {
+//        compileOnly 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
+//    } else {
+    compileOnly project(path: ":basepaywrapper")
+//    }
 }
 
 publish {
@@ -71,7 +72,7 @@ publish {
     groupId = 'org.lynxz.alipaywrapper' // 填包名就好
     artifactId = 'alipaywrapper'  // bintray中对应的packagename,大小写敏感
     uploadName = 'alipaywrapper' // rbintray中对应的maven product名称,默认为artifactId, 大小写敏感
-    publishVersion = '1.0.0' // 发布版本号
+    publishVersion = '1.0.2' // 发布版本号
     desc = '发起支付宝支付,并回调通知用户结果'
     website = 'https://github.com/lucid-lynxz/PayWrapper.git'
 }

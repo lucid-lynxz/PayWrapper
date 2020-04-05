@@ -11,7 +11,7 @@ android {
         targetSdkVersion androidTargetSdkVersion
 
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -44,11 +44,11 @@ dependencies {
     api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.8'
 
     // 基础库
-    if (useMavenVersion) {
-        compileOnly 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
-    } else {
+//    if (useMavenVersion) {
+//        compileOnly 'org.lynxz.basepaywrapper:basepaywrapper:1.0.1'
+//    } else {
         compileOnly project(path: ":basepaywrapper")
-    }
+//    }
 }
 
 publish {
@@ -64,7 +64,7 @@ publish {
     groupId = 'org.lynxz.wechatpaywrapper' // 填包名就好
     artifactId = 'wechatpaywrapper'  // bintray中对应的packagename,大小写敏感
     uploadName = 'wechatpaywrapper' // rbintray中对应的maven product名称,默认为artifactId, 大小写敏感
-    publishVersion = '1.0.0' // 发布版本号
+    publishVersion = '1.0.2' // 发布版本号
     desc = '可发起微信支付并回调'
     website = 'https://github.com/lucid-lynxz/PayWrapper.git'
 }

@@ -64,9 +64,9 @@ dependencies {
     implementation(libs.gson)
 
     if (useMavenVersion) {
-        implementation 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
-        implementation 'org.lynxz.wechatpaywrapper:wechatpaywrapper:1.0.0'
-        implementation 'org.lynxz.alipaywrapper:alipaywrapper:1.0.0'
+        implementation 'org.lynxz.basepaywrapper:basepaywrapper:1.0.2'
+        implementation 'org.lynxz.wechatpaywrapper:wechatpaywrapper:1.0.2'
+        implementation 'org.lynxz.alipaywrapper:alipaywrapper:1.0.2'
     } else {
         implementation project(path: ":basepaywrapper")
         implementation project(path: ":wechatpaywrapper")
