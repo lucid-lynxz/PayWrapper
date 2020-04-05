@@ -19,6 +19,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
     buildTypes {
@@ -58,9 +63,15 @@ dependencies {
     implementation(libs.constraintLayout)
     implementation(libs.gson)
 
-    implementation project(path: ":basepaywrapper")
-    implementation project(path: ":wechatpaywrapper")
-    implementation project(path: ":alipaywrapper")
+    if (useMavenVersion) {
+        implementation 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
+        implementation 'org.lynxz.wechatpaywrapper:wechatpaywrapper:1.0.0'
+        implementation 'org.lynxz.alipaywrapper:alipaywrapper:1.0.0'
+    } else {
+        implementation project(path: ":basepaywrapper")
+        implementation project(path: ":wechatpaywrapper")
+        implementation project(path: ":alipaywrapper")
+    }
 
     implementation(libs.thirdClassGeneration)
     kapt(libs.thirdClassGeneration)

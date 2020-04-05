@@ -1,7 +1,7 @@
 
 package org.lynxz.basepaywrapper.bizlooper;
 
-import android.util.Log;
+import org.lynxz.basepaywrapper.util.LoggerUtil;
 
 /**
  * 包装一层runnable, 用于子线程执行时打印日志, 便于排查问题
@@ -40,9 +40,9 @@ final class BizRunnableWrapper implements Runnable {
             Thread thread = Thread.currentThread();
             String threadInfo = ", name:" + thread.getName() + ",id:" + thread.getId();
 
-            Log.w(TAG, "BizRunnableWrapper running start:" + oriRunnable + threadInfo);
+            LoggerUtil.w(TAG, "BizRunnableWrapper running start:" + oriRunnable + threadInfo);
             oriRunnable.run();
-            Log.w(TAG, "BizRunnableWrapper running end:" + oriRunnable);
+            LoggerUtil.w(TAG, "BizRunnableWrapper running end:" + oriRunnable);
         }
 
         if (onRunFinishObserver != null) {

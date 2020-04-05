@@ -6,8 +6,8 @@ import android.os.Bundle
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelbase.BaseResp
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
+import org.lynxz.basepaywrapper.util.LoggerUtil
 import org.lynxz.wechatpaywrapper.WechatPayManager
-import org.lynxz.wechatpaywrapper.util.LoggerUtil
 import org.lynxz.wechatpaywrapper.util.WechatUtil
 
 /**

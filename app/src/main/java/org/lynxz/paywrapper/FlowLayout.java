@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import org.lynxz.wechatpaywrapper.util.LoggerUtil;
+import org.lynxz.basepaywrapper.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.lynxz.wechatpaywrapper.util.LoggerUtil;
+import org.lynxz.basepaywrapper.util.LoggerUtil;
 
 import java.lang.reflect.Type;
 

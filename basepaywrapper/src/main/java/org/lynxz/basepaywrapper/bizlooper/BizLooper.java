@@ -4,9 +4,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.jetbrains.annotations.Nullable;
+import org.lynxz.basepaywrapper.util.LoggerUtil;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -84,12 +84,12 @@ public class BizLooper implements BizRunnableWrapper.OnRunFinishObserver {
                     Thread thread = Thread.currentThread();
                     String threadInfo = "name:" + thread.getName() + ",id:" + thread.getId();
 
-                    Log.w(TAG, "bizThread running, " + threadInfo);
+                    LoggerUtil.w(TAG, "bizThread running, " + threadInfo);
                     Looper.prepare();
                     looper = Looper.myLooper();
                     updateLooper(looper);
                     Looper.loop();
-                    Log.w(TAG, "bizThread exit, " + threadInfo);
+                    LoggerUtil.w(TAG, "bizThread exit, " + threadInfo);
                 }
             });
         }
@@ -131,14 +131,14 @@ public class BizLooper implements BizRunnableWrapper.OnRunFinishObserver {
         }
         isBizLooperActive = true;
 
-        Log.w(TAG, "start(" + id + ") mUseMainLooper=" + mUseMainLooper);
+        LoggerUtil.w(TAG, "start(" + id + ") mUseMainLooper=" + mUseMainLooper);
         // 非主线程looper才setBizLooper()
         if (mUseMainLooper) {
             return true;
         }
 
         boolean result = looper != null;
-        Log.w(TAG, "setBizLooper(" + id + ") result= " + result + ",looper=" + looper);
+        LoggerUtil.w(TAG, "setBizLooper(" + id + ") result= " + result + ",looper=" + looper);
         return result;
     }
 

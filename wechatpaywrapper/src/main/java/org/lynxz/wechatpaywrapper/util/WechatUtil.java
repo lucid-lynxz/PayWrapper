@@ -15,6 +15,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.lynxz.basepaywrapper.util.LoggerUtil;
 import org.lynxz.wechatpaywrapper.WechatPayManager;
 
 /**

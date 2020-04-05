@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion androidCompileSdkVersion
@@ -14,6 +15,11 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 
     buildTypes {
@@ -45,5 +51,27 @@ dependencies {
     compileOnly(libs.kotlinLib)
 
     // 基础库
-    implementation project(path: ":basepaywrapper")
+    if (useMavenVersion) {
+        compileOnly 'org.lynxz.basepaywrapper:basepaywrapper:1.0.0'
+    } else {
+        compileOnly project(path: ":basepaywrapper")
+    }
+}
+
+publish {
+    // 读取配置的信息
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    bintrayUser = properties.getProperty('user') // 用户名
+    bintrayKey = properties.getProperty('apikey') // bintray 的 apikey ,可以在通过账户信息的 edit profile 中查询得到
+    dryRun = false
+
+    userOrg = 'lucid-lynxz'
+    groupId = 'org.lynxz.alipaywrapper' // 填包名就好
+    artifactId = 'alipaywrapper'  // bintray中对应的packagename,大小写敏感
+    uploadName = 'alipaywrapper' // rbintray中对应的maven product名称,默认为artifactId, 大小写敏感
+    publishVersion = '1.0.0' // 发布版本号
+    desc = '发起支付宝支付,并回调通知用户结果'
+    website = 'https://github.com/lucid-lynxz/PayWrapper.git'
 }
