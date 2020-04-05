@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.text.TextUtils;
 
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -19,6 +20,9 @@ import org.lynxz.wechatpaywrapper.WechatPayManager;
 /**
  * 微信操作相关工具类
  * 文档: https://developers.weixin.qq.com/doc/oplatform/Mobile_App/Access_Guide/Android.html
+ * 使用:
+ * 1. [前置条件] 调用 {@link #init(Application)} 进行初始化
+ * 2. 通过 {@link #pay(PayReq)} 或者 {@link #pay(String)} 调起微信支付,最终结果会通过 WXPayEntryActivity 回调
  */
 public class WechatUtil {
     private static final String TAG = "WechatUtil";
@@ -84,7 +88,10 @@ public class WechatUtil {
      */
     public boolean pay(String orderJsonByServer) {
         if (api == null) {
-            LoggerUtil.e(TAG, "支付失败, 请先初始化后再试");
+            LoggerUtil.e(TAG, "支付失败: 请先初始化后再试");
+            return false;
+        } else if (TextUtils.isEmpty(orderJsonByServer)) {
+            LoggerUtil.e(TAG, "支付失败: 订单数据信息为空");
             return false;
         }
 
@@ -98,11 +105,22 @@ public class WechatUtil {
             req.timeStamp = json.getString("timestamp"); // 时间戳
             req.packageValue = json.getString("package"); // 扩展字段, 暂填写固定值Sign=WXPay
             req.sign = json.getString("sign"); // 签名
-            return api.sendReq(req);
+            return pay(req);
         } catch (JSONException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean pay(PayReq payReq) {
+        if (api == null) {
+            LoggerUtil.e(TAG, "支付失败: 请先初始化后再试");
+            return false;
+        } else if (payReq == null) {
+            LoggerUtil.e(TAG, "字符失败: PayReq is null");
+            return false;
+        }
+        return api.sendReq(payReq);
     }
 
     public IWXAPI getWXApi() {

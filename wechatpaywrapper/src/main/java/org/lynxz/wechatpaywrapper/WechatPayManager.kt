@@ -1,6 +1,7 @@
 package org.lynxz.wechatpaywrapper
 
 import android.app.Application
+import com.tencent.mm.opensdk.modelpay.PayReq
 import org.lynxz.wechatpaywrapper.util.WechatUtil
 
 
@@ -27,7 +28,13 @@ object WechatPayManager {
 
     /**
      * 发起微信支付
+     * P.S. 内部根据 orderJsonByServer 提取所需的订单参数,拼接成 PayReq 对象后调起微信支付功能
      * @param orderJsonByServer app对应的商家后台返回的订单信息
      * */
     fun pay(orderJsonByServer: String) = WechatUtil.getInstance().pay(orderJsonByServer)
+
+    /**
+     * 发起微信字符
+     * */
+    fun pay(payReq: PayReq?) = WechatUtil.getInstance().pay(payReq)
 }

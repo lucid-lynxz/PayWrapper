@@ -1,3 +1,4 @@
 rootProject.name='PayWrapper'
 include ':app'
 include ':wechatpaywrapper'
+include ':alipaywrapper'
