@@ -7,7 +7,7 @@
             android:name="${applicationId}.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:theme="@style/AppSplash">
+            android:theme="@style/WechatPayWrapper">
             <!-- 微信支付 -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

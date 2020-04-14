@@ -64,7 +64,7 @@ publish {
     groupId = 'org.lynxz.wechatpaywrapper' // 填包名就好
     artifactId = 'wechatpaywrapper'  // bintray中对应的packagename,大小写敏感
     uploadName = 'wechatpaywrapper' // rbintray中对应的maven product名称,默认为artifactId, 大小写敏感
-    publishVersion = '1.0.2' // 发布版本号
-    desc = '可发起微信支付并回调'
+    publishVersion = wrapperVersion // 发布版本号
+    desc = wrapperDesciption
     website = 'https://github.com/lucid-lynxz/PayWrapper.git'
 }

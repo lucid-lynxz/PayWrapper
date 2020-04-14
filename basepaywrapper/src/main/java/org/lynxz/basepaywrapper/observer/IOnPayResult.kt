@@ -26,6 +26,6 @@ interface IOnPayResult {
         success: Boolean,
         statusCode: String?,
         errMsg: String?,
-        oriPayResultObj: Any
+        oriPayResultObj: Any?
     )
 }

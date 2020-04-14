@@ -21,7 +21,7 @@
         <activity
             android:name="org.lynxz.alipaywrapper.AliPayTemplateActivity"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AlipayWrapperTheme" />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

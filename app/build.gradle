@@ -45,11 +45,11 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
+//repositories {
+//    flatDir {
+//        dirs 'libs'
+//    }
+//}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -64,9 +64,9 @@ dependencies {
     implementation(libs.gson)
 
     if (useMavenVersion) {
-        implementation 'org.lynxz.basepaywrapper:basepaywrapper:1.0.2'
-        implementation 'org.lynxz.wechatpaywrapper:wechatpaywrapper:1.0.2'
-        implementation 'org.lynxz.alipaywrapper:alipaywrapper:1.0.2'
+        implementation "org.lynxz.basepaywrapper:basepaywrapper:$wrapperVersion"
+        implementation "org.lynxz.wechatpaywrapper:wechatpaywrapper:$wrapperVersion"
+        implementation "org.lynxz.alipaywrapper:alipaywrapper:$wrapperVersion"
     } else {
         implementation project(path: ":basepaywrapper")
         implementation project(path: ":wechatpaywrapper")

@@ -7,6 +7,7 @@ import org.lynxz.alipaywrapper.AliPayManager
 import org.lynxz.basepaywrapper.PayManager
 import org.lynxz.basepaywrapper.bean.PayType
 import org.lynxz.basepaywrapper.observer.IOnPayResult
+import org.lynxz.basepaywrapper.util.LoggerUtil
 import org.lynxz.paywrapper.util.OrderInfoUtil2_0
 import org.lynxz.third_generation.annotation.ThirdActivityAutoGenerator
 import org.lynxz.wechatpaywrapper.WechatPayManager
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         val sign: String = OrderInfoUtil2_0.getSign(params, BuildConfig.ALIPAY_RSA2_PRIVATE, true)
         val orderInfo = "$orderParam&$sign"
 
+        LoggerUtil.w("alipayOrderInfo", orderInfo)
         PayManager.pay(PayType.AliPay, orderInfo, onPayResult)
     }
 
@@ -82,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             success: Boolean,
             statusCode: String?,
             errMsg: String?,
-            oriPayResultObj: Any
+            oriPayResultObj: Any?
         ) {
             tv_info.post {
                 tv_info.text =

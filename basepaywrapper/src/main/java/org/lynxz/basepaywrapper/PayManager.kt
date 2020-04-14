@@ -26,6 +26,9 @@ object PayManager {
         return this
     }
 
+    /**
+     * 取消注册
+     * */
     fun unRegisterPayType(payType: PayType) {
         payMap.remove(payType)
     }
@@ -40,6 +43,13 @@ object PayManager {
         val iPayManager = payMap[payType]
         if (iPayManager == null) {
             LoggerUtil.w(TAG, "pay fail: ${payType.name}  payManager not exist")
+            onPayResult?.onPayFinish(
+                payType,
+                false,
+                "${PayWrapperErrorCode.NOT_SUPPORT_PAY_TYPE}",
+                "未注册本支付方式,请先调用 PayManager.registerPayType(payType,payManager)",
+                null
+            )
             return false
         }
 

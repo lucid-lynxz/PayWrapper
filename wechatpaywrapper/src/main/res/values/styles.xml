@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppSplash" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="WechatPayWrapper" parent="@android:style/Theme.Translucent.NoTitleBar">
         <!-- 设置启动背景透明 -->
         <item name="android:windowIsTranslucent">true</item>
         <!-- 设置启动不要Title -->

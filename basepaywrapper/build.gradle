@@ -52,7 +52,7 @@ publish {
     groupId = 'org.lynxz.basepaywrapper' // 填包名就好
     artifactId = 'basepaywrapper'  // bintray中对应的packagename,大小写敏感
     uploadName = 'basepaywrapper' // rbintray中对应的maven product名称,默认为artifactId, 大小写敏感
-    publishVersion = '1.0.2' // 发布版本号
-    desc = '注册支付方式, 发起微信-支付宝支付'
+    publishVersion = wrapperVersion // 发布版本号
+    desc = wrapperDesciption
     website = 'https://github.com/lucid-lynxz/PayWrapper.git'
 }
