@@ -18,7 +18,7 @@ object AliPayManager : IPayManager {
     private var appId: String? = null
     private var appSecret: String? = null
     private var isInitComplete = false
-    private lateinit var application: Application
+    private var application: Application? = null
 
     private const val SDK_PAY_FLAG = 0xFF00 // 支付结果
     private var pendingOnPayResult: IOnPayResult? = null // 支付结果回调监听
@@ -33,7 +33,7 @@ object AliPayManager : IPayManager {
                  * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
                  */
                 val payResult = PayResult(it.obj as Map<String?, String?>)
-                val resultInfo = payResult.result // 同步返回需要验证的信息
+                val sresultInfo = payResult.result // 同步返回需要验证的信息
                 val resultStatus = payResult.resultStatus
 
                 // 判断resultStatus 为9000则代表支付成功
@@ -48,19 +48,32 @@ object AliPayManager : IPayManager {
             true
         }
     }
-    private val bizLooper by lazy {
-        BizLooper(bizHandler).apply {
-            setThreadNamePrefix("alipayBizLooper_")
-        }
-    }
+    private var bizLooper: BizLooper? = null
 
     override fun init(application: Application, appId: String?, appSecret: String?) {
+        if (isInitialized()) {
+            LoggerUtil.w(TAG, "AliPayManager 已初始化过,不必重新初始化")
+            return
+        }
+
         AliPayManager.application = application
         AliPayManager.appId = appId
         AliPayManager.appSecret = appSecret
 
-        bizLooper.start(888888)
+        bizLooper = BizLooper(bizHandler).apply {
+            setThreadNamePrefix("alipayBizLooper_")
+        }
+        bizLooper?.start(888888)
         isInitComplete = true
+    }
+
+    override fun uninit() {
+        if (isInitialized()) {
+            bizLooper?.stop()
+        }
+        pendingOnPayResult = null
+        application = null
+        isInitComplete = false
     }
 
     override fun isInitialized() = isInitComplete
@@ -88,11 +101,11 @@ object AliPayManager : IPayManager {
 
     internal fun payInner(orderInfo: String, activity: Activity) {
         // 必须在线程中运行,否则ANR
-        bizLooper.sendBizMessage(Runnable {
+        bizLooper?.sendBizMessage(Runnable {
             val result = PayTask(activity).payV2(orderInfo, true);
             LoggerUtil.w(TAG, "aliPay.payV2 result=$result");
 
-            bizLooper.sendBizMessage(Message.obtain().apply {
+            bizLooper?.sendBizMessage(Message.obtain().apply {
                 what = SDK_PAY_FLAG
                 obj = result
             })

@@ -12,6 +12,12 @@ interface IPayManager {
     fun init(application: Application, appId: String? = null, appSecret: String? = null)
 
     /**
+     * 反初始化操作
+     * 用于释放资源,结束子线程等
+     * */
+    fun uninit()
+
+    /**
      * 是否已初始化
      * */
     fun isInitialized(): Boolean

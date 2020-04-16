@@ -13,6 +13,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.lynxz.basepaywrapper.util.LoggerUtil;
@@ -27,6 +28,7 @@ import org.lynxz.wechatpaywrapper.WechatPayManager;
  */
 public class WechatUtil {
     private static final String TAG = "WechatUtil";
+    private IntentFilter wechatFilter = new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP);
 
     private static class WechatUtilHolder {
         private static WechatUtil instance = new WechatUtil();
@@ -50,14 +52,25 @@ public class WechatUtil {
     };
 
     // 通过WXAPIFactory工厂，获取IWXAPI的实例
-    public void init(Application application) {
+    public void init(@NotNull Application application) {
         api = WXAPIFactory.createWXAPI(application, WechatPayManager.wechatAppId, true);
 
         // 将应用的appId注册到微信
         api.registerApp(WechatPayManager.wechatAppId);
 
         //建议动态监听微信启动广播进行注册到微信
-        application.registerReceiver(wechatReceiver, new IntentFilter(ConstantsAPI.ACTION_REFRESH_WXAPP));
+        application.registerReceiver(wechatReceiver, wechatFilter);
+    }
+
+    public void uninit(Application application) {
+        if (api != null) {
+            api.unregisterApp();
+            api = null;
+        }
+
+        if (application != null) {
+            application.unregisterReceiver(wechatReceiver);
+        }
     }
 
     /**

@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        btn_uninit.setOnClickListener { PayManager.unRegisterPayType(null) }
+
         btn_pay_by_wx.setOnClickListener {
             // 根据微信官方demo代码 (https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=11_1)
             // 可以通过访问该网址生成后台临时测试订单信息: https://wxpay.wxutil.com/pub_v2/app/app_pay.php
@@ -54,7 +56,7 @@ class MainActivity : AppCompatActivity() {
      * 测试支付宝付款
      *
      * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
-     * * 真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
+     * 真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
      * 防止商户私密数据泄露，造成不必要的资金损失，及面临各种安全风险；
      *
      * orderInfo 的获取必须来自服务端；

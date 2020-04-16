@@ -17,6 +17,7 @@ object PayManager {
 
     /**
      * 注册某种支付方式
+     * 若多次注册,则最后一次生效
      * */
     fun registerPayType(payType: PayType, subPayManager: IPayManager): PayManager {
         if (!subPayManager.isInitialized()) {
@@ -27,10 +28,20 @@ object PayManager {
     }
 
     /**
-     * 取消注册
+     * 取消注册某支付方式
+     * @param payType 要移除的支付方式,若为null,则表示移除所有支付方式
      * */
-    fun unRegisterPayType(payType: PayType) {
-        payMap.remove(payType)
+    fun unRegisterPayType(payType: PayType?) {
+        val iterator = payMap.iterator()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            val shouldRemove = payType == null || next.key == payType
+            if (shouldRemove) {
+                next.value.uninit()
+                iterator.remove()
+            }
+        }
+//        payMap.remove(payType)
     }
 
     /**

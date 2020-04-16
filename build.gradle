@@ -5,8 +5,8 @@ buildscript {
 
 //    ext.useMavenVersion = false // 不使用maven仓库版本, 本地开发时使用false
     ext.useMavenVersion = true // 使用maven仓库版本,用于测试发布效果
-    ext.wrapperVersion = "1.0.3" // 支付wrapper库版本号
-    ext.wrapperDesciption = "更新activity样式" // 支付wrapper库版本描述
+    ext.wrapperVersion = "1.0.5" // 支付wrapper库版本号
+    ext.wrapperDesciption = "重复初始化判定" // 支付wrapper库版本描述
 
     repositories {
         google()

@@ -25,15 +25,19 @@ class AliPayTemplateActivity : Activity() {
          * 启动activity并发起支付
          * @param orderJsonByServer 商家后台返回的订单信息
          * */
-        fun startThenPay(context: Context, orderJsonByServer: String) {
-            startInner(context, orderJsonByServer, false)
+        fun startThenPay(context: Context?, orderJsonByServer: String) {
+            context?.let {
+                startInner(it, orderJsonByServer, false)
+            }
         }
 
         /**
          * 支付结束,关闭当前activity
          * */
-        fun closeActivity(context: Context) {
-            startInner(context, null, true)
+        fun closeActivity(context: Context?) {
+            context?.let {
+                startInner(it, null, true)
+            }
         }
 
         /**

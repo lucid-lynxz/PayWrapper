@@ -7,6 +7,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq
 import org.lynxz.basepaywrapper.IPayManager
 import org.lynxz.basepaywrapper.bean.PayType
 import org.lynxz.basepaywrapper.observer.IOnPayResult
+import org.lynxz.basepaywrapper.util.LoggerUtil
 import org.lynxz.wechatpaywrapper.util.WechatUtil
 
 
@@ -16,9 +17,10 @@ import org.lynxz.wechatpaywrapper.util.WechatUtil
  * 2. 初始化后,通过 [pay] 调起微信字符
  * */
 object WechatPayManager : IPayManager {
+    private const val TAG = "WechatPayManager"
     lateinit var wechatAppId: String
     lateinit var wechatAppSecret: String
-    lateinit var application: Application
+    private var application: Application? = null
     private var isInitComplete = false
     private var pendingOnPayResult: IOnPayResult? = null // 支付结果回调监听
 
@@ -26,12 +28,26 @@ object WechatPayManager : IPayManager {
      * 初始化操作, 传入微信的 appId 和 appSecret 信息
      * */
     override fun init(application: Application, appId: String?, appSecret: String?) {
+        if (isInitialized()) {
+            LoggerUtil.w(TAG, "WechatPayManager已初始化过,不必重新初始化")
+            return
+        }
+
         this.application = application
         this.wechatAppId = appId ?: ""
         this.wechatAppSecret = appSecret ?: ""
 
         WechatUtil.getInstance().init(application)
         isInitComplete = true
+    }
+
+    override fun uninit() {
+        if (isInitialized()) {
+            WechatUtil.getInstance().uninit(application)
+        }
+        pendingOnPayResult = null
+        application = null
+        isInitComplete = false
     }
 
     override fun isInitialized() = isInitComplete

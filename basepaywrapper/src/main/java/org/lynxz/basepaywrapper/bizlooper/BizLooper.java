@@ -113,6 +113,11 @@ public class BizLooper implements BizRunnableWrapper.OnRunFinishObserver {
      * @return 是否启动成功
      */
     public boolean start(int id) {
+        if (isActive()) {
+            LoggerUtil.w(TAG, "BizLooper 已在运行,不必再次启动");
+            return true;
+        }
+
         if (bizThread != null) {
             try {
                 bizThreadName = threadNamePrefix + id;
